@@ -44,6 +44,12 @@ const run = async () => {
   server.on('error', (err) => console.error('- server err:', err))
 
   server.on('stream', async (stream, headers) => {
+
+    stream.on('error', e => log('- stream error:', e?.toString()))
+    stream.on('frameError', e => log('- stream frame error:', e?.toString()))
+    stream.on('aborted', e => log('- stream aborted:', e?.toString()))
+    stream.on('timeout', e => log('- stream timeout:', e?.toString()))
+
     const head = {
       'content-type': 'text/html; charset=utf-8',
       ':status': 200,
@@ -104,9 +110,11 @@ const run = async () => {
 
       if (headers['accept-encoding'] && headers['accept-encoding'].match(/gzip/)) {
         // gzipped:
+
         head['Content-Encoding'] = 'gzip'
+        const gzip = createGzip({ windowBits: 15, level: 9, chunkSize: 64 * 1024 })
         stream.respond(head)
-        l.pipe(createGzip({ windowBits: 15, level: 9, chunkSize: 64 * 1024 })).pipe(stream)
+        l.pipe(gzip).pipe(stream)
       } else {
         // plain text
         stream.respond(head)
