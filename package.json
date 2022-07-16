@@ -1,0 +1,35 @@
+{
+  "name": "binance-stream-server",
+  "version": "1.0.0",
+  "description": "Real-time historical trades server for back-test purposes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "docker": "docker compose up -d",
+    "logs": "docker compose logs -f trade-server",
+		"test": "mocha tests/1_base.js tests/2_api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denisix/binance-stream-server.git"
+  },
+  "keywords": [
+    "historical trades",
+    "klines server",
+    "binance historical data",
+    "binance historical stream"
+  ],
+  "author": "denisix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denisix/binance-stream-server/issues"
+  },
+  "homepage": "https://github.com/denisix/binance-stream-server#readme",
+  "dependencies": {
+    "csv-stringify": "^6.2.0",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}

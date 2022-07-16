@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  trade-server:
+    container_name: trade-server
+    build: .
+    #links:    
+    #  - trade-db
+    environment:          
+      - MYSQL_HOST=172.17.0.1 # trade-db
+      - MYSQL_DB=trade
+      - MYSQL_USER=root
+      - MYSQL_PW=
+    ports:
+      - 3000:3000
+    restart: always
